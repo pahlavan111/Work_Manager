@@ -51,16 +51,14 @@ public class ActivityPassData extends AppCompatActivity {
                     @Override
                     public void onChanged(WorkInfo workInfo) {
 
-                        if (workInfo!=null) {
+                        if (workInfo!=null && workInfo.getState().isFinished()) {
 
                            // String res = workInfo.getState().name();
                             //txt.append(res+"\n");
 
                             Data data1=workInfo.getOutputData();
                             String outPut = data1.getString(MyWorkerGetInputData.KEY_DATA_OUTPUT);
-                            if (outPut!=null){
-                                txt.append(outPut);
-                            }
+                            txt.append(outPut);
 
                         }
                     }
