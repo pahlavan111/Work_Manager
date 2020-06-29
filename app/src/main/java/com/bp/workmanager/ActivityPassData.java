@@ -2,6 +2,7 @@ package com.bp.workmanager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
+import androidx.work.Constraints;
 import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
@@ -27,16 +28,19 @@ public class ActivityPassData extends AppCompatActivity {
         btn = findViewById(R.id.btn_pass);
         txt = findViewById(R.id.txt_show_result);
 
-        Data data= new Data.Builder()  //AndroidX.Worker.Data                           // put it in request
-                .putString(KEY_TASK_DESC,"hey I am sending the work data")  // you can but more component
+        Data data = new Data.Builder()  //AndroidX.Worker.Data                           // put it in request
+                .putString(KEY_TASK_DESC, "hey I am sending the work data")  // you can but more component
                 .build();
 
 
+        Constraints constraints = new Constraints.Builder()
+                .setRequiresCharging(true)
+                .build();
 
-        final OneTimeWorkRequest request= new OneTimeWorkRequest.Builder(MyWorkerGetInputData.class)
+        final OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(MyWorkerGetInputData.class)
                 .setInputData(data)                 //you pud data in request and receive it in worker class
+                .setConstraints(constraints)
                 .build();
-
 
 
         btn.setOnClickListener(new View.OnClickListener() {
@@ -51,12 +55,12 @@ public class ActivityPassData extends AppCompatActivity {
                     @Override
                     public void onChanged(WorkInfo workInfo) {
 
-                        if (workInfo!=null && workInfo.getState().isFinished()) {
+                        if (workInfo != null && workInfo.getState().isFinished()) {
 
-                           // String res = workInfo.getState().name();
+                            // String res = workInfo.getState().name();
                             //txt.append(res+"\n");
 
-                            Data data1=workInfo.getOutputData();
+                            Data data1 = workInfo.getOutputData();
                             String outPut = data1.getString(MyWorkerGetInputData.KEY_DATA_OUTPUT);
                             txt.append(outPut);
 
