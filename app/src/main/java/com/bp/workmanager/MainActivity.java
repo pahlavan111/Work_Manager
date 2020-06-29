@@ -7,6 +7,7 @@ import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 import androidx.work.impl.WorkerWrapper;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -35,6 +36,14 @@ public class MainActivity extends AppCompatActivity {
             public void onChanged(WorkInfo workInfo) {
                 String data = workInfo.getState().name();
                 Toast.makeText(MainActivity.this, data, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        findViewById(R.id.btn_pass_data).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,ActivityPassData.class));
             }
         });
 
